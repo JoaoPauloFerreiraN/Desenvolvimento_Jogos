@@ -38,10 +38,13 @@ public class Meu_jogo extends ApplicationAdapter {
 		if (prop.x > prop.y){
 			acreX = 1;
 			acreY = Math.abs(prop.y / prop.x);
-		}else {
+		}else if (prop.x < prop.y) {
 			acreY = 1;
 			acreX = Math.abs(prop.x / prop.y);
+		}else {
+			acreY = acreX = 0;
 		}
+
 
 		if (delta.x > 0){
 			imgPos.x += acreX;
