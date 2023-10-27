@@ -1,5 +1,5 @@
 package telas;
-import com.badlogic.gdx.ApplicationAdapter;
+//import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 
 
@@ -12,7 +12,7 @@ public class Primeira extends Game{
         if (ref==null) {
             ref = this;
         }
-        this.setScreen(Menu.ref);
+        this.setScreen(new Menu());
     }
 
     public void render(){
