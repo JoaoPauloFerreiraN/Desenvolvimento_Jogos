@@ -4,9 +4,12 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.arrow.ArrowController;
 import com.mygdx.game.ballon.Ballon;
 import com.mygdx.game.ballon.BallonController;
@@ -27,18 +30,25 @@ public class MeuJogo implements Screen {
 	public static AssetManager manager;
 	public static InputMultiplexer multiplexer;
 
+	public MeuJogo(){
+		Stage stage = new Stage(new FitViewport(1920, 1080));
+	}
+
+
+
 	public static void addInputProcessor(InputProcessor inputProcessor){
 		if (multiplexer == null) multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(inputProcessor);
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 
+
 	public void create () {
 		if (ref == null){
 			ref = this;
 		}
-		timer = 0;
-		score = 0;
+//		timer = 0;
+//		score = 0;
 		batch = new SpriteBatch();
 		manager = new AssetManager();
 		manager.load("bow.png", Texture.class);
@@ -63,20 +73,23 @@ public class MeuJogo implements Screen {
 
 	@Override
 	public void render(float delta) {
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 		ScreenUtils.clear(1, 0, 0, 1);
 		Gdx.graphics.setTitle(Gdx.graphics.getFramesPerSecond()+"");
-		batch.begin();
-
-		bow.draw(batch, Gdx.graphics.getDeltaTime());
-		ArrowController.draw(batch, Gdx.graphics.getDeltaTime());
-		BallonController.draw(batch,Gdx.graphics.getDeltaTime());
-		batch.end();
-
-		timer++;
-		if (timer >= 500){
-			BallonController.set((float) (Math.random() * Gdx.graphics.getWidth()), 0);
-			timer = 0;
-		}
+//		batch.begin();
+////
+//		bow.draw(batch, Gdx.graphics.getDeltaTime());
+//		ArrowController.draw(batch, Gdx.graphics.getDeltaTime());
+//		BallonController.draw(batch,Gdx.graphics.getDeltaTime());
+//		batch.end();
+//
+//		timer++;
+//		if (timer >= 500){
+//			BallonController.set((float) (Math.random() * Gdx.graphics.getWidth()), 0);
+//			timer = 0;
+//		}
 
 	}
 
@@ -102,7 +115,8 @@ public class MeuJogo implements Screen {
 
 	@Override
 	public void dispose () {
-		batch.dispose();
+
+//		batch.dispose();
 	}
 }
 

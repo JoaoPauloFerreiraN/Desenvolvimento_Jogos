@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.MeuJogo;
 
 public class Menu implements Screen {
-    static Menu ref;
     private Stage stage;
     private Table table;
     private Skin skin;
@@ -54,7 +53,7 @@ public class Menu implements Screen {
         newGameButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                System.out.print("Clicou no novojogo"); // logica para iniciar jogo setScreen ...
+                Primeira.ref.setScreen(new Loading());
             }
         });
         TextButton exitGameButton = new TextButton("Sair", style);
