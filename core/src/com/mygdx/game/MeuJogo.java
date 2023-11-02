@@ -5,23 +5,23 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.arrow.ArrowController;
 import com.mygdx.game.ballon.Ballon;
 import com.mygdx.game.ballon.BallonController;
-import com.mygdx.game.bow.Bow;
-
-
+import com.mygdx.game.personagem.Personagem;
 
 public class MeuJogo implements Screen {
 	static MeuJogo ref;
 
 	SpriteBatch batch;
-	public static Bow bow;
+	public static Personagem personagem;
 	public static int score;
 	public static int timer;
 	public static Music music;
@@ -29,6 +29,7 @@ public class MeuJogo implements Screen {
 	public static Sound soundBallon;
 	public static AssetManager manager;
 	public static InputMultiplexer multiplexer;
+	private OrthographicCamera camera;
 
 	public MeuJogo(){
 		Stage stage = new Stage(new FitViewport(1920, 1080));
@@ -42,13 +43,18 @@ public class MeuJogo implements Screen {
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 
-
-	public void create () {
+	@Override
+	public void show () {
 		if (ref == null){
 			ref = this;
 		}
-//		timer = 0;
-//		score = 0;
+
+		/*Setar Camera*/
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, camera.viewportWidth, camera.viewportHeight);
+		//-----------------------------------
+
+		/*Setando Assets*/
 		batch = new SpriteBatch();
 		manager = new AssetManager();
 		manager.load("bow.png", Texture.class);
@@ -60,16 +66,14 @@ public class MeuJogo implements Screen {
 		music = manager.get("sons/sons/GameBGM.mp3", Music.class);
 		soundBallon = manager.get("sons/sons/LANG_JPN_0017.wav", Sound.class);
 		music.play();
-		bow = new Bow();
+		personagem = new Personagem();
 		ballon = new Ballon();
+		//----------------------------------
+		
 		BallonController.init();
 		ArrowController.init();
 	}
 
-	@Override
-	public void show() {
-
-	}
 
 	@Override
 	public void render(float delta) {
@@ -78,24 +82,25 @@ public class MeuJogo implements Screen {
 
 		ScreenUtils.clear(1, 0, 0, 1);
 		Gdx.graphics.setTitle(Gdx.graphics.getFramesPerSecond()+"");
-//		batch.begin();
-////
-//		bow.draw(batch, Gdx.graphics.getDeltaTime());
-//		ArrowController.draw(batch, Gdx.graphics.getDeltaTime());
-//		BallonController.draw(batch,Gdx.graphics.getDeltaTime());
-//		batch.end();
-//
-//		timer++;
-//		if (timer >= 500){
-//			BallonController.set((float) (Math.random() * Gdx.graphics.getWidth()), 0);
-//			timer = 0;
-//		}
+		batch.begin();
 
+		personagem.draw(batch, Gdx.graphics.getDeltaTime());
+		ArrowController.draw(batch, Gdx.graphics.getDeltaTime());
+		BallonController.draw(batch,Gdx.graphics.getDeltaTime());
+		batch.end();
+
+		timer++;
+		if (timer >= 500){
+			BallonController.set((float) (Math.random() * Gdx.graphics.getWidth()), 0);
+			timer = 0;
+		}
+		batch.setProjectionMatrix(camera.combined);
+		this.update(delta);
 	}
 
 	@Override
 	public void resize(int width, int height) {
-
+		camera.setToOrtho(false, width, height);
 	}
 
 	@Override
@@ -115,9 +120,22 @@ public class MeuJogo implements Screen {
 
 	@Override
 	public void dispose () {
-
-//		batch.dispose();
+		batch.dispose();
 	}
+
+	public void update(float delta){
+		cameraUpdate(delta);
+	}
+
+	public void cameraUpdate(float delta){
+		Vector3 position = camera.position;
+		position.x = personagem.getX();
+		position.y = personagem.getY();
+		System.out.printf(position.x+" "+ position.y);
+		camera.position.set(position);
+		camera.update();
+	}
+
 }
 
 

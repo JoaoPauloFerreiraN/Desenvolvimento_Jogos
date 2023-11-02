@@ -15,11 +15,12 @@ public class BoladeLa extends Sprite {
         super.draw(batch);
         update(delta);
     }
+    //ProgressBar
 
     public void update(float delta){
+        this.rotate(0.2f);
         if (!isOutOfScreen()) {
-            this.setX(this.getX() + 150 * delta);
-            System.out.printf(this.getScaleX() + "  " + this.getScaleY());
+            this.setX(this.getX() + 4100 * delta);
             this.setScale((this.getScaleX()- ((float) 0.06*delta)),this.getScaleY()- ((float) 0.06*delta));
         }else{
             Primeira.ref.setScreen(new MeuJogo());

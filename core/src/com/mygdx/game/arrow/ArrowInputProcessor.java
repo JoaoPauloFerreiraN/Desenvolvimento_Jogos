@@ -21,7 +21,7 @@ public class ArrowInputProcessor implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        ArrowController.set(70, MeuJogo.bow.getY()+MeuJogo.bow.getHeight()/2 - 40);
+        ArrowController.set(70, MeuJogo.personagem.getY()+MeuJogo.personagem.getHeight()/2 - 40);
         return false;
     }
 

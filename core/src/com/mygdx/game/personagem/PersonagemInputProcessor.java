@@ -1,29 +1,36 @@
-package com.mygdx.game.bow;
+package com.mygdx.game.personagem;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
-public class BowInputProcessor implements InputProcessor {
-    boolean up, down;
+public class PersonagemInputProcessor implements InputProcessor {
+    boolean up, down, jump;
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.W){
+        if (keycode == Input.Keys.A){
             up = true;
         }
-        if (keycode == Input.Keys.S){
+        if (keycode == Input.Keys.D){
             down = true;
         }
-
+        if (keycode == Input.Keys.SPACE) {
+            jump = true;
+        }
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        if (keycode == Input.Keys.W)
+        if (keycode == Input.Keys.A) {
             up = false;
-        if (keycode == Input.Keys.S)
+        }
+        if (keycode == Input.Keys.D) {
             down = false;
+        }
+        if (keycode == Input.Keys.SPACE) {
+            jump = false;
+        }
         return false;
     }
 

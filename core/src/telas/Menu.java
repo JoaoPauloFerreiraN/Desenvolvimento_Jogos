@@ -25,22 +25,22 @@ public class Menu implements Screen {
 
 
     public Menu (){
+        Texture t = new Texture("GatoMenu.jpg");
+
+
         stage = new Stage(new FitViewport(1920,1080));
         Gdx.input.setInputProcessor(stage);
-       // skin = new Skin(Gdx.files.internal("uiskin.json"));
         table = new Table();
         table.setFillParent(true);
-        stage.addActor(table);
+
 
         Pixmap roundedRectTexture = createRoundedRectTexture(200, 50, 20); // Largura: 200, Altura: 50, Raio do arredondamento: 20
-        //roundedRectTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
         Texture teste = new Texture(roundedRectTexture);
 
         TextureRegion upRegion = new TextureRegion(teste);
         TextureRegion downRegion = new TextureRegion(teste);
-        BitmapFont buttonFont = new BitmapFont();
-        //BitmapFont buttonFont = new BitmapFont(Gdx.files.internal("data/novoJogo.fnt"), Gdx.files.internal("data/novoJogo.png"),false);
+        BitmapFont buttonFont = new BitmapFont(Gdx.files.internal("data/font50jogo.fnt"), Gdx.files.internal("data/font50jogo.png"),false);
 
 
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
@@ -63,8 +63,11 @@ public class Menu implements Screen {
                 Gdx.app.exit();
             }
         });
-        table.add(newGameButton).padBottom(20).row();
-        table.add(exitGameButton);
+
+
+        table.add(newGameButton).expand().pad(10);
+        table.add(exitGameButton).expand().pad(10);
+        stage.addActor(table);
     }
     @Override
     public void show() {
@@ -73,7 +76,7 @@ public class Menu implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act();
